@@ -1,8 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
 import { Typography, Box } from '@mui/material';
-import { ListCategoryPage } from '../presentation/features/category/pages/list';
-import { CreateCategoryPage } from '../presentation/features/category/pages/create';
-import { EditCategoryPage } from '../presentation/features/category/pages/edit';
+import { ListCategoryPage } from '../presentation/modules/category/pages/list';
+import { CreateCategoryPage } from '../presentation/modules/category/pages/create';
+import { EditCategoryPage } from '../presentation/modules/category/pages/edit';
 
 export const AppRoutes = () => (
   <Routes>

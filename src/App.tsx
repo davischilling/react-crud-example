@@ -2,8 +2,8 @@ import { ThemeProvider, Box } from '@mui/system';
 import { appTheme } from './config/theme';
 import { AppRoutes } from './config/routes';
 import { SnackbarProvider } from 'notistack';
-import { Header } from './presentation/components/Header';
-import { Layout } from './presentation/components/Layout';
+import { Header } from './presentation/@shared/components/Header';
+import { Layout } from './presentation/@shared/components/Layout';
 
 function App() {
   return (

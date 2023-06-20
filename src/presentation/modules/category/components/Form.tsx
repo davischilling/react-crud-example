@@ -1,9 +1,9 @@
-import { Box, Button, Grid } from "@mui/material";
-import { ChangeEvent, FormEvent } from "react";
-import { Link } from "react-router-dom";
-import FormInput from "../../../components/FormInput";
-import FormSwitch from "../../../components/FormSwitch";
-import { Category } from "../category";
+import { Box, Button, Grid } from '@mui/material';
+import { ChangeEvent, FormEvent } from 'react';
+import { Link } from 'react-router-dom';
+import FormInput from '../../../@shared/components/FormInput';
+import FormSwitch from '../../../@shared/components/FormSwitch';
+import { Category } from '../category';
 
 type FormProps = {
   category: Partial<Category>;
@@ -48,7 +48,7 @@ export default function Form({
             color="secondary"
             onChange={handleToggle}
             checked={category?.is_active}
-            inputProps={{ "aria-label": "controlled" }}
+            inputProps={{ 'aria-label': 'controlled' }}
           />
 
           <Grid item xs={12}>
@@ -57,12 +57,7 @@ export default function Form({
                 Back
               </Button>
 
-              <Button
-                variant="contained"
-                color="secondary"
-                type="submit"
-                disabled={isDisabled}
-              >
+              <Button variant="contained" color="secondary" type="submit" disabled={isDisabled}>
                 Save
               </Button>
             </Box>

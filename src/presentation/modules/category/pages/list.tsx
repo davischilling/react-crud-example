@@ -1,8 +1,11 @@
 import { Box, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { Table } from '../components/Table';
+import { useCategoryUseCase } from '../store';
 
 export function ListCategoryPage() {
+  const { state, useCase } = useCategoryUseCase();
+
   return (
     <Box maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Box display="flex" justifyContent="flex-end">
@@ -18,17 +21,7 @@ export function ListCategoryPage() {
       </Box>
 
       <Table
-        data={[
-          {
-            id: '1',
-            name: 'Category 1',
-            description: 'Description 1',
-            is_active: true,
-            created_at: new Date().toLocaleDateString('pt-BR'),
-            updated_at: new Date().toLocaleDateString('pt-BR'),
-            deleted_at: null,
-          },
-        ]}
+        data={state.categories}
         perPage={1}
         isFetching={false}
         rowsPerPage={[5, 10, 15, 20]}

@@ -1,9 +1,9 @@
 import { Box, Button, Grid } from '@mui/material';
 import { ChangeEvent, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
+import { Category } from '../../../../domain/models/category';
 import FormInput from '../../../@shared/components/FormInput';
 import FormSwitch from '../../../@shared/components/FormSwitch';
-import { Category } from '../category';
 
 type FormProps = {
   category: Partial<Category>;
@@ -30,7 +30,7 @@ export default function Form({
             required
             name="name"
             label="Name"
-            value={`${category?.name}`}
+            value={category.name}
             onChange={handleChange}
           />
           <FormInput
@@ -47,7 +47,7 @@ export default function Form({
             name="is_active"
             color="secondary"
             onChange={handleToggle}
-            checked={category?.is_active}
+            checked={category.is_active}
             inputProps={{ 'aria-label': 'controlled' }}
           />
 

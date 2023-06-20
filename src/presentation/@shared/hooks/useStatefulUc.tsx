@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import {
   SetState,
   StateCallback,
@@ -8,29 +8,43 @@ import {
 type StateFulContextUseCaseProps<State, UseCaseClass extends StatefulUseCase<State>> = {
   UseCase: new (state: State, setStateCb: SetState<State>) => UseCaseClass;
   store: () => [State, (value: Partial<State>) => void];
-  INITIAL_STATE?: Partial<State>;
 };
+
+function useCallbackRef<T = () => void>(callback: T) {
+  const callbackRef = useRef(callback);
+  useLayoutEffect(() => {
+    callbackRef.current = callback;
+  }, [callback]);
+  return callbackRef;
+}
 
 export function useStatefulUseCase<State, UseCaseClass extends StatefulUseCase<State>>({
   UseCase,
-  INITIAL_STATE,
   store,
 }: StateFulContextUseCaseProps<State, UseCaseClass>) {
   const [logicState, setLogicState] = store();
-  const useCaseLogicRef = useRef<UseCaseClass>();
 
-  useEffect(() => {
-    const setState = (newState: any, cb?: StateCallback) => {
+  const setState = useCallback(
+    (newState: any, cb?: StateCallback) => {
       setLogicState(Object.assign({}, logicState, newState));
       cb && cb();
-    };
+    },
+    [logicState, setLogicState],
+  );
 
-    useCaseLogicRef.current = new UseCase(logicState, (newState, cb) => {
+  console.log('rendering useStatefulUseCase');
+
+  const useCaseLogicRef = useCallbackRef<UseCaseClass>(
+    new UseCase(logicState, (newState, cb) => {
       setState(newState, cb);
-    });
+    }),
+  );
 
-    useCaseLogicRef.current.init();
-  }, [logicState]);
+  useEffect(() => {
+    return () => {
+      useCaseLogicRef.current.init();
+    };
+  }, []);
 
   return { state: logicState, useCase: useCaseLogicRef.current };
 }

@@ -14,26 +14,17 @@ import { Category } from '../../../../domain/models/category';
 type TableProps = {
   // data: Results | undefined;
   data: Category[] | undefined;
-  perPage: number;
+  // perPage: number;
   isFetching: boolean;
-  rowsPerPage?: number[];
+  rowsPerPage: number[];
 
-  handleOnPageChange: (page: number) => void;
+  // handleOnPageChange: (page: number) => void;
   handleFilterChange: (filterModel: GridFilterModel) => void;
-  handleOnPageSizeChange: (perPage: number) => void;
+  // handleOnPageSizeChange: (perPage: number) => void;
   handleDelete: (id: string) => Promise<void>;
 };
 
-export function Table({
-  data,
-  perPage,
-  isFetching,
-  rowsPerPage,
-  handleOnPageChange,
-  handleFilterChange,
-  handleOnPageSizeChange,
-  handleDelete,
-}: TableProps) {
+export function Table({ data, handleDelete, rowsPerPage, handleFilterChange }: TableProps) {
   const componentProps = {
     toolbar: {
       showQuickFilter: true,
@@ -52,7 +43,6 @@ export function Table({
   }
 
   const rows: GridRowsProp = data ? mapRows(data) : [];
-
   const columns: GridColDef[] = [
     {
       field: 'name',
@@ -111,7 +101,7 @@ export function Table({
   }
 
   function renderEditDateCell(row: GridRenderCellParams) {
-    return <Typography>{new Date(row.value as string).toLocaleDateString('pt-BR')}</Typography>;
+    return <Typography>{row.value}</Typography>;
   }
 
   return (
@@ -121,6 +111,11 @@ export function Table({
         columns={columns}
         slotProps={componentProps}
         slots={{ toolbar: GridToolbar }}
+        initialState={{
+          pagination: { paginationModel: { pageSize: rowsPerPage[0] } },
+        }}
+        pageSizeOptions={rowsPerPage}
+        onFilterModelChange={handleFilterChange}
         disableColumnFilter={true}
         disableColumnSelector={true}
         disableDensitySelector={true}

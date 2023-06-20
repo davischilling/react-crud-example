@@ -1,10 +1,18 @@
 import { Routes, Route } from 'react-router-dom';
 import { Typography, Box } from '@mui/material';
-import { CategoryRoutes } from '../presentation/modules/category/routes';
+import { CategoryRoutes } from '../modules/category/routes';
+import { CategoryProvider } from './stores/category';
 
 export const AppRoutes = () => (
   <Routes>
-    <Route path="/categories/*" element={<CategoryRoutes />} />
+    <Route
+      path="/categories/*"
+      element={
+        <CategoryProvider>
+          <CategoryRoutes />
+        </CategoryProvider>
+      }
+    />
     <Route
       path="*"
       element={

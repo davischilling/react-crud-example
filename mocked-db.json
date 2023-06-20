@@ -1,0 +1,76 @@
+{
+  "categories": [
+    {
+      "name": "categoria 1",
+      "description": "descricao 1",
+      "is_active": true,
+      "created_at": "Tue Jun 20 2023 13:50:32 GMT-0300 (Brasilia Standard Time)",
+      "updated_at": "Tue Jun 20 2023 13:50:32 GMT-0300 (Brasilia Standard Time)",
+      "deleted_at": null,
+      "id": 1
+    },
+    {
+      "name": "categoria 2",
+      "description": "descricao 2",
+      "is_active": true,
+      "created_at": "Tue Jun 20 2023 13:50:35 GMT-0300 (Brasilia Standard Time)",
+      "updated_at": "Tue Jun 20 2023 13:50:35 GMT-0300 (Brasilia Standard Time)",
+      "deleted_at": null,
+      "id": 2
+    },
+    {
+      "name": "categoria 3",
+      "description": "descricao 3",
+      "is_active": true,
+      "created_at": "Tue Jun 20 2023 13:51:14 GMT-0300 (Brasilia Standard Time)",
+      "updated_at": "Tue Jun 20 2023 13:51:14 GMT-0300 (Brasilia Standard Time)",
+      "deleted_at": null,
+      "id": 3
+    },
+    {
+      "name": "categoria 4",
+      "description": "descricao 4",
+      "is_active": true,
+      "created_at": "Tue Jun 20 2023 13:51:18 GMT-0300 (Brasilia Standard Time)",
+      "updated_at": "Tue Jun 20 2023 13:51:18 GMT-0300 (Brasilia Standard Time)",
+      "deleted_at": null,
+      "id": 4
+    },
+    {
+      "name": "categoria 5",
+      "description": "descricao 5",
+      "is_active": true,
+      "created_at": "Tue Jun 20 2023 13:51:28 GMT-0300 (Brasilia Standard Time)",
+      "updated_at": "Tue Jun 20 2023 13:51:28 GMT-0300 (Brasilia Standard Time)",
+      "deleted_at": null,
+      "id": 5
+    },
+    {
+      "name": "categoria 6",
+      "description": "descricao 6",
+      "is_active": true,
+      "created_at": "Tue Jun 20 2023 13:51:32 GMT-0300 (Brasilia Standard Time)",
+      "updated_at": "Tue Jun 20 2023 13:51:32 GMT-0300 (Brasilia Standard Time)",
+      "deleted_at": null,
+      "id": 6
+    },
+    {
+      "name": "categoria 7",
+      "description": "descricao 7",
+      "is_active": true,
+      "created_at": "Tue Jun 20 2023 13:52:08 GMT-0300 (Brasilia Standard Time)",
+      "updated_at": "Tue Jun 20 2023 13:52:08 GMT-0300 (Brasilia Standard Time)",
+      "deleted_at": null,
+      "id": 7
+    },
+    {
+      "name": "t",
+      "description": "",
+      "is_active": true,
+      "created_at": "Tue Jun 20 2023 17:38:15 GMT-0300 (Brasilia Standard Time)",
+      "updated_at": "Tue Jun 20 2023 17:38:15 GMT-0300 (Brasilia Standard Time)",
+      "deleted_at": "Tue Jun 20 2023 17:43:50 GMT-0300 (Brasilia Standard Time)",
+      "id": 8
+    }
+  ]
+}

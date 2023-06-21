@@ -1,20 +1,24 @@
 import { useSnackbar } from 'notistack';
-import { ChangeEvent, FormEvent, useEffect, useMemo } from 'react';
+import { ChangeEvent, FormEvent, useMemo } from 'react';
 
-type FormStateProps = {
-  setEntity: ({ name, value }: { name: any; value: string }) => void;
+type FormStateProps<Name> = {
+  setEntity: ({ name, value }: { name: Name; value: string }) => void;
   onSubmit: () => Promise<void>;
   submitCallback: () => void;
-  // snackMessage: string;
-  // status: any;
+  snackMessage: string;
 };
 
-export function useFormState({ setEntity, onSubmit, submitCallback }: FormStateProps) {
-  // const { enqueueSnackbar } = useSnackbar();
+export function useFormState<Name = string>({
+  setEntity,
+  onSubmit,
+  submitCallback,
+  snackMessage,
+}: FormStateProps<Name>) {
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEntity({
-      name: e.target.name,
+      name: e.target.name as Name,
       value: e.target.value,
     });
   };
@@ -22,20 +26,17 @@ export function useFormState({ setEntity, onSubmit, submitCallback }: FormStateP
   const handleSubmit = useMemo(
     () => async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      await onSubmit();
-      submitCallback();
+      try {
+        await onSubmit();
+        submitCallback();
+        enqueueSnackbar(snackMessage, { variant: 'success' });
+      } catch (error) {
+        console.log(error);
+        enqueueSnackbar('Something went wrong', { variant: 'error' });
+      }
     },
     [],
   );
-
-  // useEffect(() => {
-  //   if (status.error) {
-  //     enqueueSnackbar('Something went wrong', { variant: 'error' });
-  //   }
-  //   if (status.isSuccess) {
-  //     enqueueSnackbar(snackMessage, { variant: 'success' });
-  //   }
-  // }, [enqueueSnackbar, status.error, status.isSuccess]);
 
   return { handleChange, handleSubmit };
 }

@@ -1,5 +1,6 @@
-import { Routes, Route } from 'react-router-dom';
-import { Typography, Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import { Route, Routes } from 'react-router-dom';
+
 import { CategoryRoutes } from '../modules/category/routes';
 
 export const AppRoutes = () => (

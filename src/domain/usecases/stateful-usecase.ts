@@ -1,10 +1,10 @@
 export type StateCallback = () => void;
-export type SetState<T = any> = (newState: Partial<T>, cb?: StateCallback) => void;
+export type SetState<T> = (newState: Partial<T>, cb?: StateCallback) => void;
 
-export class StatefulUseCase<State> {
+export abstract class StatefulUseCase<State> {
   protected state: State;
   protected setState: SetState<State>;
-  static counter: number = 0;
+  static counter = 0;
 
   constructor(state: State, setStateCb: SetState<State>) {
     this.state = state;
@@ -19,5 +19,5 @@ export class StatefulUseCase<State> {
     return this.state;
   }
 
-  public async init(): Promise<void> {}
+  abstract init: () => Promise<void>;
 }

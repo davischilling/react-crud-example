@@ -1,10 +1,4 @@
-import {
-  FormControlLabel,
-  FormGroup,
-  Grid,
-  Switch,
-  SwitchProps,
-} from "@mui/material";
+import { FormControlLabel, FormGroup, Grid, Switch, SwitchProps } from '@mui/material';
 
 type FormSwitchProps = {
   label: string;

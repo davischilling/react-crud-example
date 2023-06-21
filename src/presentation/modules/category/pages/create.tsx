@@ -1,5 +1,6 @@
 import { Box, Paper, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+
 import {
   CreateCategoryUseCase,
   DEFAULT_STATE,
@@ -19,6 +20,7 @@ export function CreateCategoryPage() {
     setEntity: useCase.setCategory,
     onSubmit: useCase.createCategory,
     submitCallback: () => navigate('/categories'),
+    snackMessage: 'Category created successfully',
   });
 
   return (

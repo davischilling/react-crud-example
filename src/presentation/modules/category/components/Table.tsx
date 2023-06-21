@@ -8,7 +8,9 @@ import {
   GridRowsProp,
   GridToolbar,
 } from '@mui/x-data-grid';
+import { useSnackbar } from 'notistack';
 import { Link } from 'react-router-dom';
+
 import { Category } from '../../../../domain/models/category';
 
 type TableProps = {
@@ -32,6 +34,7 @@ export function Table({
       quickFilterProps: { debounceMs: 500 },
     },
   };
+  const { enqueueSnackbar } = useSnackbar();
 
   function mapRows(data: Category[]) {
     return data.map((category) => ({
@@ -85,7 +88,10 @@ export function Table({
     return (
       <IconButton
         aria-label="delete"
-        onClick={() => handleDelete(row.value as string)}
+        onClick={() => {
+          handleDelete(row.value as string);
+          enqueueSnackbar('Category deleted successfully', { variant: 'success' });
+        }}
         color="secondary"
       >
         <DeleteIcon />

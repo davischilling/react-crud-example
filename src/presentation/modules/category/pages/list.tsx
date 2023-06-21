@@ -2,13 +2,14 @@ import { Box, Button } from '@mui/material';
 import { GridFilterModel } from '@mui/x-data-grid';
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
+
 import {
+  DEFAULT_STATE,
   ListCategoriesUseCase,
   State,
-  DEFAULT_STATE,
 } from '../../../../domain/usecases/category/list';
-import { Table } from '../components/Table';
 import { useStatefulUseCase } from '../../../@shared/hooks/useStatefulUc';
+import { Table } from '../components/Table';
 
 export function ListCategoryPage() {
   const { state, useCase } = useStatefulUseCase<State, ListCategoriesUseCase>({

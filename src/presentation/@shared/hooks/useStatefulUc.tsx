@@ -1,4 +1,5 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
+
 import {
   SetState,
   StateCallback,
@@ -11,14 +12,6 @@ type StateFulUseCaseProps<State, UseCaseClass extends StatefulUseCase<State>> = 
   INITIAL_STATE?: Partial<State>;
 };
 
-function useCallbackRef<T = () => void>(callback: T) {
-  const callbackRef = useRef(callback);
-  useLayoutEffect(() => {
-    callbackRef.current = callback;
-  }, [callback]);
-  return callbackRef;
-}
-
 export function useStatefulUseCase<State, UseCaseClass extends StatefulUseCase<State>>({
   UseCase,
   DEFAULT_STATE,
@@ -27,7 +20,7 @@ export function useStatefulUseCase<State, UseCaseClass extends StatefulUseCase<S
   const [logicState, setLogicState] = useState<State>(
     Object.assign({}, DEFAULT_STATE, INITIAL_STATE),
   );
-  const setState = (newState: any, cb?: StateCallback) => {
+  const setState = (newState: Partial<State>, cb?: StateCallback) => {
     setLogicState((oldState) => Object.assign({}, oldState, newState));
     cb && cb();
   };

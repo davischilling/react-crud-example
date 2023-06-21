@@ -1,6 +1,7 @@
 import { Box, Button, Grid } from '@mui/material';
 import { ChangeEvent, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
+
 import { Category } from '../../../../domain/models/category';
 import FormInput from '../../../@shared/components/FormInput';
 import FormSwitch from '../../../@shared/components/FormSwitch';

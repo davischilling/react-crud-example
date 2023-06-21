@@ -1,9 +1,10 @@
-import { ThemeProvider, Box } from '@mui/system';
-import { appTheme } from './presentation/config/theme';
-import { AppRoutes } from './presentation/config/routes';
+import { Box, ThemeProvider } from '@mui/system';
 import { SnackbarProvider } from 'notistack';
+
 import { Header } from './presentation/@shared/components/Header';
 import { Layout } from './presentation/@shared/components/Layout';
+import { AppRoutes } from './presentation/config/routes';
+import { appTheme } from './presentation/config/theme';
 
 function App() {
   return (

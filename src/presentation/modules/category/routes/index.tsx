@@ -1,5 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import { Route, Routes } from 'react-router-dom';
+
 import { CreateCategoryPage } from '../pages/create';
 import { EditCategoryPage } from '../pages/edit';
 import { ListCategoryPage } from '../pages/list';

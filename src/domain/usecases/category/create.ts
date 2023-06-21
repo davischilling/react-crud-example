@@ -15,6 +15,10 @@ export const DEFAULT_STATE: State = {
 };
 
 export class CreateCategoryUseCase extends StatefulUseCase<State> {
+  init = async () => {
+    console.log('init CreateCategoryUseCase');
+  };
+
   setCategory = ({ name, value }: { name: 'name' | 'description'; value: string }) => {
     console.log('setCategory');
 

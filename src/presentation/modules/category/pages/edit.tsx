@@ -1,14 +1,14 @@
 import { Box, Paper, Typography } from '@mui/material';
-import Form from '../components/Form';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useFormState } from '../../../@shared/hooks/useFormState';
-import { useEffect } from 'react';
-import { useStatefulUseCase } from '../../../@shared/hooks/useStatefulUc';
+
 import {
-  EditCategoryUseCase,
   DEFAULT_STATE,
+  EditCategoryUseCase,
   State,
 } from '../../../../domain/usecases/category/edit';
+import { useFormState } from '../../../@shared/hooks/useFormState';
+import { useStatefulUseCase } from '../../../@shared/hooks/useStatefulUc';
+import Form from '../components/Form';
 
 export function EditCategoryPage() {
   const id = useParams().id || '';
@@ -31,9 +31,8 @@ export function EditCategoryPage() {
     setEntity: useCase.setCategory,
     onSubmit: useCase.updateCategory,
     submitCallback: () => navigate('/categories'),
+    snackMessage: 'Category updated successfully',
   });
-
-  if (state.isLoading) return null;
 
   return (
     <Box>
@@ -45,9 +44,9 @@ export function EditCategoryPage() {
         </Box>
 
         <Form
-          isLoading={!state.category}
+          isLoading={state.isLoading}
           category={state.category}
-          isDisabled={false}
+          isDisabled={state.isLoading}
           handleToggle={useCase.toggleIsActive}
           handleChange={handleChange}
           handleSubmit={handleSubmit}

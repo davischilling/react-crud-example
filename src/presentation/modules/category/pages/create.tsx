@@ -16,8 +16,9 @@ export function CreateCategoryPage() {
     DEFAULT_STATE,
   });
   const navigate = useNavigate();
-  const { handleChange, handleSubmit } = useFormState({
+  const { handleChange, handleSubmit, handleToggle } = useFormState({
     setEntity: useCase.setCategory,
+    onToggle: useCase.toggleIsActive,
     onSubmit: useCase.createCategory,
     submitCallback: () => navigate('/categories'),
     snackMessage: 'Category created successfully',
@@ -35,7 +36,7 @@ export function CreateCategoryPage() {
         <Form
           category={state.category}
           isDisabled={false}
-          handleToggle={useCase.toggleIsActive}
+          handleToggle={handleToggle}
           handleChange={handleChange}
           handleSubmit={handleSubmit}
         />

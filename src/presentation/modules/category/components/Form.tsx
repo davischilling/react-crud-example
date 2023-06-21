@@ -10,7 +10,7 @@ type FormProps = {
   category: Partial<Category>;
   isDisabled: boolean;
   isLoading?: boolean;
-  handleToggle: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleToggle: (event: ChangeEvent<HTMLInputElement>, checked: boolean) => void;
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
   handleSubmit: (e: FormEvent<HTMLFormElement>) => Promise<void>;
 };

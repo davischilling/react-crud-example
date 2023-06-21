@@ -73,5 +73,3 @@ exports[`App renders the app correctly 1`] = `
   </main>
 </DocumentFragment>
 `;
-
-exports[`App should render app correctly 1`] = `[Function]`;

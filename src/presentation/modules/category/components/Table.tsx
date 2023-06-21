@@ -64,7 +64,7 @@ export function Table({
     },
     {
       field: 'created_at',
-      headerName: 'Created At',
+      headerName: 'CreatedAt',
       flex: 1,
       renderCell: renderEditDateCell,
     },
@@ -93,6 +93,7 @@ export function Table({
           enqueueSnackbar('Category deleted successfully', { variant: 'success' });
         }}
         color="secondary"
+        data-testid={`delete-button-${row.id}`}
       >
         <DeleteIcon />
       </IconButton>
@@ -108,7 +109,11 @@ export function Table({
   }
 
   function renderEditDateCell(row: GridRenderCellParams) {
-    return <Typography>{row.value}</Typography>;
+    return (
+      <div>
+        <Typography data-testid={`created-at-cell-${row.id}`}>{row.value}</Typography>
+      </div>
+    );
   }
 
   return (

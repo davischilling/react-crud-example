@@ -27,8 +27,9 @@ export function EditCategoryPage() {
 
   const navigate = useNavigate();
 
-  const { handleChange, handleSubmit } = useFormState({
+  const { handleChange, handleToggle, handleSubmit } = useFormState({
     setEntity: useCase.setCategory,
+    onToggle: useCase.toggleIsActive,
     onSubmit: useCase.updateCategory,
     submitCallback: () => navigate('/categories'),
     snackMessage: 'Category updated successfully',
@@ -47,7 +48,7 @@ export function EditCategoryPage() {
           isLoading={state.isLoading}
           category={state.category}
           isDisabled={state.isLoading}
-          handleToggle={useCase.toggleIsActive}
+          handleToggle={handleToggle}
           handleChange={handleChange}
           handleSubmit={handleSubmit}
         />

@@ -6,10 +6,9 @@ type MockState = {
   value: number;
 };
 
-// Create a mock implementation of the StatefulUseCase
 class MockUseCase extends StatefulUseCase<MockState> {
   init = async () => {
-    console.log('init CreateCategoryUseCase');
+    // no need for implementation
   };
 
   updateValue = (value: number) => {

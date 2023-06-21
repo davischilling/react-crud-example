@@ -8,7 +8,7 @@
     "lint:fix": "eslint ./src --ext .jsx,.js,.ts,.tsx --fix --ignore-path ./.gitignore --max-warnings=0",
     "lint:format": "prettier  --loglevel warn --write \"./**/*.{js,jsx,ts,tsx,css,md,json}\" ",
     "lint": "npm run lint:format && npm run lint:fix ",
-    "test": "jest",
+    "test": "jest -u",
     "test:cov": "jest --coverage"
   },
   "dependencies": {

@@ -10,80 +10,88 @@ jest.mock('notistack', () => ({
 }));
 
 describe('useFormState', () => {
-  it('should call onSubmit, submitCallback, and enqueueSnackbar on form submit', async () => {
-    const setEntity = jest.fn();
-    const onSubmit = jest.fn().mockResolvedValueOnce({});
-    const submitCallback = jest.fn();
-    const snackMessage = 'Form submitted successfully';
+  const setEntity = jest.fn();
+  const onToggle = jest.fn();
+  const onSubmit = jest.fn();
+  const submitCallback = jest.fn();
+  const snackMessage = 'Test Snack Message';
 
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should call setEntity when handleChange is called', () => {
     const { result } = renderHook(() =>
       useFormState({ setEntity, onSubmit, submitCallback, snackMessage }),
     );
-
-    const { handleSubmit } = result.current;
-
-    await act(async () => {
-      await handleSubmit({
-        preventDefault: jest.fn(),
-      } as unknown as React.FormEvent<HTMLFormElement>);
-    });
-
-    expect(onSubmit).toHaveBeenCalled();
-    expect(submitCallback).toHaveBeenCalled();
-
-    const { enqueueSnackbar } = useSnackbar();
-    expect(enqueueSnackbar).toHaveBeenCalledWith(snackMessage, {
-      variant: 'success',
-    });
-  });
-
-  it('should display an error snackbar when onSubmit throws an error', async () => {
-    const setEntity = jest.fn();
-    const onSubmit = jest.fn().mockRejectedValueOnce(new Error('Some error'));
-    const submitCallback = jest.fn();
-
-    const { result } = renderHook(() =>
-      useFormState({ setEntity, onSubmit, submitCallback, snackMessage: '' }),
-    );
-
-    const { handleSubmit } = result.current;
-
-    await act(async () => {
-      await handleSubmit({
-        preventDefault: jest.fn(),
-      } as unknown as React.FormEvent<HTMLFormElement>);
-    });
-
-    const { enqueueSnackbar } = useSnackbar();
-    expect(enqueueSnackbar).toHaveBeenCalledWith('Something went wrong', {
-      variant: 'error',
-    });
-  });
-
-  it('should update entity state correctly on input change', () => {
-    const setEntity = jest.fn();
-    const onSubmit = jest.fn();
-    const submitCallback = jest.fn();
-    const snackMessage = 'Form submitted successfully';
-
-    const { result } = renderHook(() =>
-      useFormState({ setEntity, onSubmit, submitCallback, snackMessage }),
-    );
-
     const { handleChange } = result.current;
-
-    const name = 'firstName';
-    const value = 'John';
 
     act(() => {
       handleChange({
-        target: { name, value },
+        target: { name: 'name', value: 'Test Name' },
       } as unknown as React.ChangeEvent<HTMLInputElement>);
     });
 
-    expect(setEntity).toHaveBeenCalledWith({
-      name,
-      value,
+    expect(setEntity).toHaveBeenCalledTimes(1);
+    expect(setEntity).toHaveBeenCalledWith({ name: 'name', value: 'Test Name' });
+  });
+
+  it('should call onToggle when handleToggle is called', () => {
+    const { result } = renderHook(() =>
+      useFormState({ setEntity, onToggle, onSubmit, submitCallback, snackMessage }),
+    );
+    const { handleToggle } = result.current;
+
+    act(() => {
+      handleToggle({} as React.ChangeEvent<HTMLInputElement>, true);
     });
+
+    expect(onToggle).toHaveBeenCalledTimes(1);
+    expect(onToggle).toHaveBeenCalledWith(true);
+
+    act(() => {
+      handleToggle({} as React.ChangeEvent<HTMLInputElement>, false);
+    });
+
+    expect(onToggle).toHaveBeenCalledTimes(2);
+    expect(onToggle).toHaveBeenCalledWith(false);
+  });
+
+  it('should call onSubmit, submitCallback, and enqueueSnackbar when handleSubmit is called', async () => {
+    const { result } = renderHook(() =>
+      useFormState({ setEntity, onSubmit, submitCallback, snackMessage }),
+    );
+    const { handleSubmit } = result.current;
+    const { enqueueSnackbar } = useSnackbar();
+
+    await act(async () => {
+      await handleSubmit({
+        preventDefault: jest.fn(),
+      } as unknown as React.FormEvent<HTMLFormElement>);
+    });
+
+    expect(onSubmit).toHaveBeenCalledTimes(1);
+    expect(submitCallback).toHaveBeenCalledTimes(1);
+    expect(enqueueSnackbar).toHaveBeenCalledWith(snackMessage, { variant: 'success' });
+  });
+
+  it('should call enqueueSnackbar with error variant when onSubmit throws an error', async () => {
+    const { result } = renderHook(() =>
+      useFormState({ setEntity, onSubmit, submitCallback, snackMessage }),
+    );
+    const { handleSubmit } = result.current;
+    const { enqueueSnackbar } = useSnackbar();
+
+    onSubmit.mockRejectedValueOnce(new Error('Test Error'));
+
+    await act(async () => {
+      await handleSubmit({
+        preventDefault: jest.fn(),
+      } as unknown as React.FormEvent<HTMLFormElement>);
+    });
+
+    expect(onSubmit).toHaveBeenCalledTimes(1);
+    expect(submitCallback).not.toHaveBeenCalled();
+    expect(enqueueSnackbar).toHaveBeenCalledWith('Something went wrong', { variant: 'error' });
   });
 });

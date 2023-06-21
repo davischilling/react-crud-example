@@ -3,6 +3,7 @@ import { ChangeEvent, FormEvent, useMemo } from 'react';
 
 type FormStateProps<Name> = {
   setEntity: ({ name, value }: { name: Name; value: string }) => void;
+  onToggle?: (value: boolean) => void;
   onSubmit: () => Promise<void>;
   submitCallback: () => void;
   snackMessage: string;
@@ -10,18 +11,29 @@ type FormStateProps<Name> = {
 
 export function useFormState<Name = string>({
   setEntity,
+  onToggle,
   onSubmit,
   submitCallback,
   snackMessage,
 }: FormStateProps<Name>) {
   const { enqueueSnackbar } = useSnackbar();
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setEntity({
-      name: e.target.name as Name,
-      value: e.target.value,
-    });
-  };
+  const handleChange = useMemo(
+    () => (e: ChangeEvent<HTMLInputElement>) => {
+      setEntity({
+        name: e.target.name as Name,
+        value: e.target.value,
+      });
+    },
+    [setEntity],
+  );
+
+  const handleToggle = useMemo(
+    () => (event: ChangeEvent<HTMLInputElement>, checked: boolean) => {
+      onToggle && onToggle(checked);
+    },
+    [],
+  );
 
   const handleSubmit = useMemo(
     () => async (e: FormEvent<HTMLFormElement>) => {
@@ -31,12 +43,11 @@ export function useFormState<Name = string>({
         submitCallback();
         enqueueSnackbar(snackMessage, { variant: 'success' });
       } catch (error) {
-        console.log(error);
         enqueueSnackbar('Something went wrong', { variant: 'error' });
       }
     },
     [],
   );
 
-  return { handleChange, handleSubmit };
+  return { handleChange, handleToggle, handleSubmit };
 }

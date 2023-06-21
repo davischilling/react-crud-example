@@ -1,3 +1,77 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`App renders the app correctly 1`] = `
+<DocumentFragment>
+  <main
+    class="MuiBox-root css-h5b0ws"
+  >
+    <div
+      class="MuiBox-root css-i9gxme"
+    >
+      <header
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionStatic css-1yb9xju-MuiPaper-root-MuiAppBar-root"
+      >
+        <div
+          class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular css-hyum1k-MuiToolbar-root"
+        >
+          <button
+            aria-label="menu"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart MuiIconButton-sizeLarge css-1rolj69-MuiButtonBase-root-MuiIconButton-root"
+            tabindex="0"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="MenuIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+              />
+            </svg>
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
+          <div
+            class="MuiTypography-root MuiTypography-h6 css-1juivf6-MuiTypography-root"
+          >
+            News
+          </div>
+          <button
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit css-wewvx6-MuiButtonBase-root-MuiButton-root"
+            tabindex="0"
+            type="button"
+          >
+            Login
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
+        </div>
+      </header>
+    </div>
+    <div
+      class="MuiBox-root css-0"
+    >
+      <div
+        class="MuiContainer-root MuiContainer-maxWidthLg css-87kmc0-MuiContainer-root"
+      >
+        <div
+          class="MuiBox-root css-0"
+        >
+          <h1
+            class="MuiTypography-root MuiTypography-h3 css-gepadz-MuiTypography-root"
+          >
+            404 - Not Found
+          </h1>
+        </div>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;
+
 exports[`App should render app correctly 1`] = `[Function]`;

@@ -5,14 +5,7 @@ import { CategoryRoutes } from '../modules/category/routes';
 
 export const AppRoutes = () => (
   <Routes>
-    <Route
-      path="/categories/*"
-      element={
-        // <CategoryProvider>
-        <CategoryRoutes />
-        // </CategoryProvider>
-      }
-    />
+    <Route path="/categories/*" element={<CategoryRoutes />} />
     <Route
       path="*"
       element={

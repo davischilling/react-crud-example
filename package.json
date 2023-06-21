@@ -1,5 +1,5 @@
 {
-  "name": "vendas-online-web",
+  "name": "react-crud-example",
   "version": "0.0.0",
   "scripts": {
     "dev": "concurrently \"json-server --watch mocked-db.json --port 5000\" \"vite\"",

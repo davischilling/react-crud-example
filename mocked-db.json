@@ -2,75 +2,48 @@
   "categories": [
     {
       "name": "categoria 1",
-      "description": "descricao 1",
+      "description": "desc 1",
       "is_active": true,
-      "created_at": "Tue Jun 20 2023 13:50:32 GMT-0300 (Brasilia Standard Time)",
-      "updated_at": "Tue Jun 20 2023 13:50:32 GMT-0300 (Brasilia Standard Time)",
-      "deleted_at": null,
+      "created_at": "Tue Jun 20 2023 23:40:52 GMT-0300 (Brasilia Standard Time)",
+      "updated_at": "Tue Jun 20 2023 23:40:52 GMT-0300 (Brasilia Standard Time)",
+      "deleted_at": "Tue Jun 20 2023 23:49:24 GMT-0300 (Brasilia Standard Time)",
       "id": 1
     },
     {
-      "name": "categoria 2",
-      "description": "descricao 2",
-      "is_active": true,
-      "created_at": "Tue Jun 20 2023 13:50:35 GMT-0300 (Brasilia Standard Time)",
-      "updated_at": "Tue Jun 20 2023 13:50:35 GMT-0300 (Brasilia Standard Time)",
+      "name": "testando uma nova categoria",
+      "description": "desc da categoria editada",
+      "is_active": false,
+      "created_at": "Tue Jun 20 2023 23:49:43 GMT-0300 (Brasilia Standard Time)",
+      "updated_at": "Tue Jun 20 2023 23:50:25 GMT-0300 (Brasilia Standard Time)",
       "deleted_at": null,
       "id": 2
     },
     {
-      "name": "categoria 3",
-      "description": "descricao 3",
+      "name": "cat 1",
+      "description": "desc 1",
       "is_active": true,
-      "created_at": "Tue Jun 20 2023 13:51:14 GMT-0300 (Brasilia Standard Time)",
-      "updated_at": "Tue Jun 20 2023 13:51:14 GMT-0300 (Brasilia Standard Time)",
+      "created_at": "Tue Jun 20 2023 23:50:59 GMT-0300 (Brasilia Standard Time)",
+      "updated_at": "Tue Jun 20 2023 23:50:59 GMT-0300 (Brasilia Standard Time)",
       "deleted_at": null,
       "id": 3
     },
     {
-      "name": "categoria 4",
-      "description": "descricao 4",
+      "name": "cat 2",
+      "description": "desc 2",
       "is_active": true,
-      "created_at": "Tue Jun 20 2023 13:51:18 GMT-0300 (Brasilia Standard Time)",
-      "updated_at": "Tue Jun 20 2023 13:51:18 GMT-0300 (Brasilia Standard Time)",
-      "deleted_at": null,
+      "created_at": "Tue Jun 20 2023 23:51:06 GMT-0300 (Brasilia Standard Time)",
+      "updated_at": "Tue Jun 20 2023 23:51:06 GMT-0300 (Brasilia Standard Time)",
+      "deleted_at": "Tue Jun 20 2023 23:53:24 GMT-0300 (Brasilia Standard Time)",
       "id": 4
     },
     {
-      "name": "categoria 5",
-      "description": "descricao 5",
+      "name": "cat 3",
+      "description": "desc 3",
       "is_active": true,
-      "created_at": "Tue Jun 20 2023 13:51:28 GMT-0300 (Brasilia Standard Time)",
-      "updated_at": "Tue Jun 20 2023 13:51:28 GMT-0300 (Brasilia Standard Time)",
+      "created_at": "Tue Jun 20 2023 23:51:18 GMT-0300 (Brasilia Standard Time)",
+      "updated_at": "Tue Jun 20 2023 23:51:18 GMT-0300 (Brasilia Standard Time)",
       "deleted_at": null,
       "id": 5
-    },
-    {
-      "name": "categoria 6",
-      "description": "descricao 6",
-      "is_active": true,
-      "created_at": "Tue Jun 20 2023 13:51:32 GMT-0300 (Brasilia Standard Time)",
-      "updated_at": "Tue Jun 20 2023 13:51:32 GMT-0300 (Brasilia Standard Time)",
-      "deleted_at": null,
-      "id": 6
-    },
-    {
-      "name": "categoria 7",
-      "description": "descricao 7",
-      "is_active": true,
-      "created_at": "Tue Jun 20 2023 13:52:08 GMT-0300 (Brasilia Standard Time)",
-      "updated_at": "Tue Jun 20 2023 13:52:08 GMT-0300 (Brasilia Standard Time)",
-      "deleted_at": null,
-      "id": 7
-    },
-    {
-      "name": "t",
-      "description": "",
-      "is_active": true,
-      "created_at": "Tue Jun 20 2023 17:38:15 GMT-0300 (Brasilia Standard Time)",
-      "updated_at": "Tue Jun 20 2023 17:38:15 GMT-0300 (Brasilia Standard Time)",
-      "deleted_at": "Tue Jun 20 2023 17:43:50 GMT-0300 (Brasilia Standard Time)",
-      "id": 8
     }
   ]
 }

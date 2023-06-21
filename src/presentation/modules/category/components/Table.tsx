@@ -12,19 +12,20 @@ import { Link } from 'react-router-dom';
 import { Category } from '../../../../domain/models/category';
 
 type TableProps = {
-  // data: Results | undefined;
   data: Category[] | undefined;
-  // perPage: number;
   isFetching: boolean;
   rowsPerPage: number[];
-
-  // handleOnPageChange: (page: number) => void;
   handleFilterChange: (filterModel: GridFilterModel) => void;
-  // handleOnPageSizeChange: (perPage: number) => void;
   handleDelete: (id: string) => Promise<void>;
 };
 
-export function Table({ data, handleDelete, rowsPerPage, handleFilterChange }: TableProps) {
+export function Table({
+  data,
+  handleDelete,
+  rowsPerPage,
+  handleFilterChange,
+  isFetching,
+}: TableProps) {
   const componentProps = {
     toolbar: {
       showQuickFilter: true,
@@ -114,6 +115,7 @@ export function Table({ data, handleDelete, rowsPerPage, handleFilterChange }: T
         initialState={{
           pagination: { paginationModel: { pageSize: rowsPerPage[0] } },
         }}
+        loading={isFetching}
         pageSizeOptions={rowsPerPage}
         onFilterModelChange={handleFilterChange}
         disableColumnFilter={true}

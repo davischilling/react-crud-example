@@ -2,16 +2,20 @@ import { Box, Button } from '@mui/material';
 import { GridFilterModel } from '@mui/x-data-grid';
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Category } from '../../../../domain/models/category';
-import { CategoryUseCase, State } from '../../../../domain/usecases/modules/category';
+import {
+  ListCategoriesUseCase,
+  State,
+  DEFAULT_STATE,
+} from '../../../../domain/usecases/category/list';
 import { Table } from '../components/Table';
+import { useStatefulUseCase } from '../../../@shared/hooks/useStatefulUc';
 
-type Props = {
-  state: State;
-  useCase: CategoryUseCase;
-};
+export function ListCategoryPage() {
+  const { state, useCase } = useStatefulUseCase<State, ListCategoriesUseCase>({
+    UseCase: ListCategoriesUseCase,
+    DEFAULT_STATE,
+  });
 
-export function ListCategoryPage({ state, useCase }: Props) {
   return (
     <Box maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Box display="flex" justifyContent="flex-end">
@@ -28,7 +32,7 @@ export function ListCategoryPage({ state, useCase }: Props) {
 
       <Table
         data={state.filteredCategories}
-        isFetching={false}
+        isFetching={state.isLoading}
         rowsPerPage={[5, 10, 15, 20]}
         handleDelete={useMemo(() => useCase.deleteCategory, [])}
         handleFilterChange={useMemo(

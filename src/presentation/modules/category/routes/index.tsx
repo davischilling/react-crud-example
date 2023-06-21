@@ -1,17 +1,14 @@
-import { Routes, Route } from 'react-router-dom';
-import { ListCategoryPage } from '../pages/list';
+import { Box, Typography } from '@mui/material';
+import { Route, Routes } from 'react-router-dom';
 import { CreateCategoryPage } from '../pages/create';
 import { EditCategoryPage } from '../pages/edit';
-import { Typography, Box } from '@mui/material';
-import { useCategoryUseCase } from '../../../config/stores/category';
+import { ListCategoryPage } from '../pages/list';
 
 export function CategoryRoutes() {
-  const { state, useCase } = useCategoryUseCase();
-
   return (
     <Routes>
-      <Route path="/" element={<ListCategoryPage state={state} useCase={useCase!} />} />
-      <Route path="/create" element={<CreateCategoryPage state={state} useCase={useCase!} />} />
+      <Route path="/" element={<ListCategoryPage />} />
+      <Route path="/create" element={<CreateCategoryPage />} />
       <Route path="/edit/:id" element={<EditCategoryPage />} />
       <Route
         path="*"

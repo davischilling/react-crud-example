@@ -1,13 +1,14 @@
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import {
   SetState,
   StateCallback,
   StatefulUseCase,
 } from '../../../domain/usecases/stateful-usecase';
 
-type StateFulContextUseCaseProps<State, UseCaseClass extends StatefulUseCase<State>> = {
+type StateFulUseCaseProps<State, UseCaseClass extends StatefulUseCase<State>> = {
   UseCase: new (state: State, setStateCb: SetState<State>) => UseCaseClass;
-  store: () => [State, (value: Partial<State>) => void];
+  DEFAULT_STATE: State;
+  INITIAL_STATE?: Partial<State>;
 };
 
 function useCallbackRef<T = () => void>(callback: T) {
@@ -20,21 +21,18 @@ function useCallbackRef<T = () => void>(callback: T) {
 
 export function useStatefulUseCase<State, UseCaseClass extends StatefulUseCase<State>>({
   UseCase,
-  store,
-}: StateFulContextUseCaseProps<State, UseCaseClass>) {
-  const [logicState, setLogicState] = store();
-
-  const setState = useCallback(
-    (newState: any, cb?: StateCallback) => {
-      setLogicState(Object.assign({}, logicState, newState));
-      cb && cb();
-    },
-    [logicState, setLogicState],
+  DEFAULT_STATE,
+  INITIAL_STATE = {},
+}: StateFulUseCaseProps<State, UseCaseClass>) {
+  const [logicState, setLogicState] = useState<State>(
+    Object.assign({}, DEFAULT_STATE, INITIAL_STATE),
   );
+  const setState = (newState: any, cb?: StateCallback) => {
+    setLogicState((oldState) => Object.assign({}, oldState, newState));
+    cb && cb();
+  };
 
-  console.log('rendering useStatefulUseCase');
-
-  const useCaseLogicRef = useCallbackRef<UseCaseClass>(
+  const [useCase] = useState<UseCaseClass>(
     new UseCase(logicState, (newState, cb) => {
       setState(newState, cb);
     }),
@@ -42,9 +40,9 @@ export function useStatefulUseCase<State, UseCaseClass extends StatefulUseCase<S
 
   useEffect(() => {
     return () => {
-      useCaseLogicRef.current.init();
+      useCase.init();
     };
   }, []);
 
-  return { state: logicState, useCase: useCaseLogicRef.current };
+  return { state: logicState, useCase };
 }

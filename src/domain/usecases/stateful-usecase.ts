@@ -4,6 +4,7 @@ export type SetState<T = any> = (newState: Partial<T>, cb?: StateCallback) => vo
 export class StatefulUseCase<State> {
   protected state: State;
   protected setState: SetState<State>;
+  static counter: number = 0;
 
   constructor(state: State, setStateCb: SetState<State>) {
     this.state = state;
@@ -11,6 +12,7 @@ export class StatefulUseCase<State> {
       this.state = Object.assign({}, this.state, newState);
       setStateCb(newState, cb);
     };
+    StatefulUseCase.counter++;
   }
 
   public getState(): State {

@@ -1,26 +1,25 @@
 import { Box, Paper, Typography } from '@mui/material';
-import { FormEvent, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Category } from '../../../../domain/models/category';
-import { CategoryUseCase, State } from '../../../../domain/usecases/modules/category';
+import {
+  CreateCategoryUseCase,
+  DEFAULT_STATE,
+  State,
+} from '../../../../domain/usecases/category/create';
+import { useFormState } from '../../../@shared/hooks/useFormState';
+import { useStatefulUseCase } from '../../../@shared/hooks/useStatefulUc';
 import Form from '../components/Form';
-import { useFormState } from '../hooks/useFormState';
 
-type Props = {
-  state: State;
-  useCase: CategoryUseCase;
-};
-
-export function CreateCategoryPage({ state, useCase }: Props) {
+export function CreateCategoryPage() {
+  const { state, useCase } = useStatefulUseCase<State, CreateCategoryUseCase>({
+    UseCase: CreateCategoryUseCase,
+    DEFAULT_STATE,
+  });
   const navigate = useNavigate();
-
   const { handleChange, handleSubmit } = useFormState({
     setEntity: useCase.setCategory,
     onSubmit: useCase.createCategory,
     submitCallback: () => navigate('/categories'),
   });
-
-  console.log('rendering page');
 
   return (
     <Box>
@@ -34,7 +33,7 @@ export function CreateCategoryPage({ state, useCase }: Props) {
         <Form
           category={state.category}
           isDisabled={false}
-          handleToggle={useMemo(() => useCase.toggleIsActive, [])}
+          handleToggle={useCase.toggleIsActive}
           handleChange={handleChange}
           handleSubmit={handleSubmit}
         />

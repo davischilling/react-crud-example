@@ -1,5 +1,5 @@
 import { useSnackbar } from 'notistack';
-import { ChangeEvent, FormEvent, useMemo } from 'react';
+import { ChangeEvent, FormEvent, useCallback } from 'react';
 
 type FormStateProps<Name> = {
   setEntity: ({ name, value }: { name: Name; value: string }) => void;
@@ -18,8 +18,8 @@ export function useFormState<Name = string>({
 }: FormStateProps<Name>) {
   const { enqueueSnackbar } = useSnackbar();
 
-  const handleChange = useMemo(
-    () => (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
       setEntity({
         name: e.target.name as Name,
         value: e.target.value,
@@ -28,26 +28,20 @@ export function useFormState<Name = string>({
     [setEntity],
   );
 
-  const handleToggle = useMemo(
-    () => (event: ChangeEvent<HTMLInputElement>, checked: boolean) => {
-      onToggle && onToggle(checked);
-    },
-    [],
-  );
+  const handleToggle = useCallback((event: ChangeEvent<HTMLInputElement>, checked: boolean) => {
+    onToggle && onToggle(checked);
+  }, []);
 
-  const handleSubmit = useMemo(
-    () => async (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      try {
-        await onSubmit();
-        submitCallback();
-        enqueueSnackbar(snackMessage, { variant: 'success' });
-      } catch (error) {
-        enqueueSnackbar('Something went wrong', { variant: 'error' });
-      }
-    },
-    [],
-  );
+  const handleSubmit = useCallback(async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      await onSubmit();
+      submitCallback();
+      enqueueSnackbar(snackMessage, { variant: 'success' });
+    } catch (error) {
+      enqueueSnackbar('Something went wrong', { variant: 'error' });
+    }
+  }, []);
 
   return { handleChange, handleToggle, handleSubmit };
 }

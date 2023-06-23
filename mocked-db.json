@@ -64,13 +64,31 @@
       "id": 7
     },
     {
-      "name": "Category 1 editado",
+      "name": "Category 1 editado novamente",
       "description": "desc da categoria",
-      "is_active": true,
+      "is_active": false,
       "created_at": "Wed Jun 21 2023 22:30:25 GMT-0300 (Brasilia Standard Time)",
-      "updated_at": "Wed Jun 21 2023 22:30:25 GMT-0300 (Brasilia Standard Time)",
+      "updated_at": "Fri Jun 23 2023 12:35:10 GMT-0300 (Brasilia Standard Time)",
       "deleted_at": null,
       "id": 8
+    },
+    {
+      "name": "nova categoria",
+      "description": "desc da categoria",
+      "is_active": true,
+      "created_at": "Fri Jun 23 2023 12:34:56 GMT-0300 (Brasilia Standard Time)",
+      "updated_at": "Fri Jun 23 2023 12:34:56 GMT-0300 (Brasilia Standard Time)",
+      "deleted_at": "Fri Jun 23 2023 12:35:15 GMT-0300 (Brasilia Standard Time)",
+      "id": 9
+    },
+    {
+      "name": "testando uma nova categori",
+      "description": "desc da categoria",
+      "is_active": true,
+      "created_at": "Fri Jun 23 2023 12:35:28 GMT-0300 (Brasilia Standard Time)",
+      "updated_at": "Fri Jun 23 2023 12:35:28 GMT-0300 (Brasilia Standard Time)",
+      "deleted_at": null,
+      "id": 10
     }
   ]
 }

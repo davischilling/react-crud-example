@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from '@mui/material';
 import { GridFilterModel } from '@mui/x-data-grid';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
 import {
@@ -40,9 +40,9 @@ export function ListCategoryPage() {
         data={state.filteredCategories}
         isFetching={state.isLoading}
         rowsPerPage={[5, 10, 15, 20]}
-        handleDelete={useMemo(() => useCase.deleteCategory, [])}
-        handleFilterChange={useMemo(
-          () => (filterModel: GridFilterModel) =>
+        handleDelete={useCallback(useCase.deleteCategory, [])}
+        handleFilterChange={useCallback(
+          (filterModel: GridFilterModel) =>
             useCase.filterCategories(
               filterModel.quickFilterValues && filterModel.quickFilterValues[0],
             ),

@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 
 import { Category } from '../../../../domain/models/category';
 
-type TableProps = {
+export type TableProps = {
   data: Category[] | undefined;
   isFetching: boolean;
   rowsPerPage: number[];
@@ -46,6 +46,43 @@ export function Table({
     }));
   }
 
+  const renderLinkToEditPageCell = (row: GridRenderCellParams) => (
+    <Link style={{ textDecoration: 'none', color: 'inherit' }} to={`/categories/edit/${row.id}`}>
+      <Typography>{row.value}</Typography>
+    </Link>
+  );
+
+  const renderIsActiveCell = (row: GridRenderCellParams) => (
+    <Typography color={row.value ? 'primary' : 'secondary'}>
+      {row.value ? 'Active' : 'Inactive'}
+    </Typography>
+  );
+  const renderEditDateCell = (row: GridRenderCellParams) => (
+    <Typography data-testid={`created-at-cell-${row.id}`} data-cell-id={row.id}>
+      {row.value}
+    </Typography>
+  );
+
+  const onDelete = async (value: string) => {
+    try {
+      await handleDelete(value);
+      enqueueSnackbar('Category deleted successfully', { variant: 'success' });
+    } catch (error) {
+      enqueueSnackbar('Error deleting category', { variant: 'error' });
+    }
+  };
+
+  const renderActionsCell = (row: GridRenderCellParams) => (
+    <IconButton
+      aria-label="delete"
+      onClick={() => onDelete(row.value as string)}
+      color="secondary"
+      data-testid={`delete-button-${row.id}`}
+    >
+      <DeleteIcon />
+    </IconButton>
+  );
+
   const rows: GridRowsProp = data ? mapRows(data) : [];
   const columns: GridColDef[] = [
     {
@@ -75,46 +112,6 @@ export function Table({
       renderCell: renderActionsCell,
     },
   ];
-
-  function renderLinkToEditPageCell(row: GridRenderCellParams) {
-    return (
-      <Link style={{ textDecoration: 'none', color: 'inherit' }} to={`/categories/edit/${row.id}`}>
-        <Typography>{row.value}</Typography>
-      </Link>
-    );
-  }
-
-  function renderActionsCell(row: GridRenderCellParams) {
-    return (
-      <IconButton
-        aria-label="delete"
-        onClick={() => {
-          handleDelete(row.value as string);
-          enqueueSnackbar('Category deleted successfully', { variant: 'success' });
-        }}
-        color="secondary"
-        data-testid={`delete-button-${row.id}`}
-      >
-        <DeleteIcon />
-      </IconButton>
-    );
-  }
-
-  function renderIsActiveCell(row: GridRenderCellParams) {
-    return (
-      <Typography color={row.value ? 'primary' : 'secondary'}>
-        {row.value ? 'Active' : 'Inactive'}
-      </Typography>
-    );
-  }
-
-  function renderEditDateCell(row: GridRenderCellParams) {
-    return (
-      <div>
-        <Typography data-testid={`created-at-cell-${row.id}`}>{row.value}</Typography>
-      </div>
-    );
-  }
 
   return (
     <Box sx={{ display: 'flex', height: 600 }}>

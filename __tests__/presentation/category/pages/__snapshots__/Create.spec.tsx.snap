@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateCategoryPage renders the "Create Category" page 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-0"
+  >
+    <div
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-1ps6pg7-MuiPaper-root"
+    >
+      <div
+        class="MuiBox-root css-19midj6"
+      >
+        <div
+          class="MuiBox-root css-1qm1lh"
+        >
+          <h4
+            class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+          >
+            Create Category
+          </h4>
+        </div>
+      </div>
+      <div>
+        Mocked Form Content
+        <form>
+          <button>
+            toggle
+          </button>
+          <button
+            type="submit"
+          >
+            submit
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

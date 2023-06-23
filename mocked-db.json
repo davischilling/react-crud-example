@@ -60,8 +60,17 @@
       "is_active": true,
       "created_at": "Wed Jun 21 2023 12:12:08 GMT-0300 (Brasilia Standard Time)",
       "updated_at": "Wed Jun 21 2023 12:12:08 GMT-0300 (Brasilia Standard Time)",
-      "deleted_at": null,
+      "deleted_at": "Wed Jun 21 2023 19:58:29 GMT-0300 (Brasilia Standard Time)",
       "id": 7
+    },
+    {
+      "name": "Category 1 editado",
+      "description": "desc da categoria",
+      "is_active": true,
+      "created_at": "Wed Jun 21 2023 22:30:25 GMT-0300 (Brasilia Standard Time)",
+      "updated_at": "Wed Jun 21 2023 22:30:25 GMT-0300 (Brasilia Standard Time)",
+      "deleted_at": null,
+      "id": 8
     }
   ]
 }

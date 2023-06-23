@@ -11,7 +11,8 @@ import { useStatefulUseCase } from '../../../@shared/hooks/useStatefulUc';
 import Form from '../components/Form';
 
 export function EditCategoryPage() {
-  const id = useParams().id || '';
+  const id = useParams().id;
+
   const { state, useCase } = useStatefulUseCase<State, EditCategoryUseCase>({
     UseCase: EditCategoryUseCase,
     DEFAULT_STATE,

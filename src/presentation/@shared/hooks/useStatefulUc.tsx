@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import {
-  SetState,
-  StateCallback,
-  StatefulUseCase,
-} from '../../../domain/usecases/stateful-usecase';
+import { SetState, StatefulUseCase } from '../../../domain/usecases/stateful-usecase';
 
 type StatefulUseCaseProps<State, UseCaseClass extends StatefulUseCase<State>> = {
   UseCase: new (state: State, setStateCb: SetState<State>) => UseCaseClass;

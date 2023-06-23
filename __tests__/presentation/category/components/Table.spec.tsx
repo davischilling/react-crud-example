@@ -1,4 +1,4 @@
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { act, prettyDOM, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 
@@ -20,8 +20,8 @@ const mockData: Category[] = [
     name: 'Category 1',
     description: 'Description 1',
     is_active: true,
-    created_at: new Date(date1).toString(),
-    updated_at: new Date(date1).toString(),
+    created_at: new Date(date1).toISOString(),
+    updated_at: new Date(date1).toISOString(),
     deleted_at: null,
   },
   {
@@ -29,8 +29,8 @@ const mockData: Category[] = [
     name: 'Category 2',
     description: 'Description 2',
     is_active: false,
-    created_at: new Date(date2).toString(),
-    updated_at: new Date(date2).toString(),
+    created_at: new Date(date2).toISOString(),
+    updated_at: new Date(date2).toISOString(),
     deleted_at: null,
   },
 ];
@@ -38,32 +38,28 @@ const mockData: Category[] = [
 const mockHandleDelete = jest.fn();
 
 describe('Table', () => {
+  let fragment: DocumentFragment;
+  beforeEach(async () => {
+    fragment = await waitFor(() => {
+      const { container, asFragment } = render(
+        <Table
+          data={mockData}
+          isFetching={false}
+          rowsPerPage={[5, 10, 25]}
+          handleFilterChange={() => {}}
+          handleDelete={mockHandleDelete}
+        />,
+        { wrapper: BrowserRouter },
+      );
+      return asFragment();
+    });
+  });
+
   it('should correcly render Table component', async () => {
-    const { asFragment } = render(
-      <Table
-        data={mockData}
-        isFetching={false}
-        rowsPerPage={[5, 10, 25]}
-        handleFilterChange={() => {}}
-        handleDelete={mockHandleDelete}
-      />,
-      { wrapper: BrowserRouter },
-    );
-    expect(asFragment()).toMatchSnapshot();
+    expect(fragment).toMatchSnapshot();
   });
 
   it('should render the table with correct data', async () => {
-    const screen = render(
-      <Table
-        data={mockData}
-        isFetching={false}
-        rowsPerPage={[5, 10, 25]}
-        handleFilterChange={() => {}}
-        handleDelete={mockHandleDelete}
-      />,
-      { wrapper: BrowserRouter },
-    );
-
     const nameCell1 = screen.getByText('Category 1');
     const descriptionCell1 = screen.getByText('Description 1');
     const activeCell1 = screen.getByText((content, element) => {

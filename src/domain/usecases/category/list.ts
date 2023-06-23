@@ -1,4 +1,5 @@
 import { api } from '../../api';
+import { NotFoundError } from '../../errors/not-found-error';
 import { Category } from '../../models/category';
 import { StatefulUseCase } from '../stateful-usecase';
 
@@ -43,7 +44,7 @@ export class ListCategoriesUseCase extends StatefulUseCase<State> {
     const categories = this.getState().categories;
     const category = categories.find((category) => category.id === id);
     if (!category) {
-      throw new Error('Category not found');
+      throw new NotFoundError('Category');
     }
     const fmtCategory: Category = {
       ...category,
@@ -59,10 +60,9 @@ export class ListCategoriesUseCase extends StatefulUseCase<State> {
     this.loadCategories(fmrCategories);
   };
 
-  private loadCategories = (c: Category[], cb?: () => void) => {
+  private loadCategories = (c: Category[]) => {
     const categories = c.filter((c: Category) => !c.deleted_at);
     this.setState({ categories, filteredCategories: categories }, () => {
-      cb && cb();
       this.setState({ isLoading: false });
     });
   };

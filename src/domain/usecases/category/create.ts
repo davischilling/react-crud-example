@@ -1,4 +1,5 @@
 import { api } from '../../api';
+import { ValidationError } from '../../errors/validation-error';
 import { Category } from '../../models/category';
 import { StatefulUseCase } from '../stateful-usecase';
 
@@ -20,6 +21,9 @@ export class CreateCategoryUseCase extends StatefulUseCase<State> {
   };
 
   setCategory = ({ name, value }: { name: 'name' | 'description'; value: string }) => {
+    if (!['name', 'description'].includes(name)) {
+      throw new ValidationError(`Invalid attribute type: ${name}`);
+    }
     this.setState({
       category: {
         ...this.state.category,

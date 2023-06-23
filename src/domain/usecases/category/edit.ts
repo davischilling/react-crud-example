@@ -1,4 +1,6 @@
 import { api } from '../../api';
+import { NotFoundError } from '../../errors/not-found-error';
+import { ValidationError } from '../../errors/validation-error';
 import { Category } from '../../models/category';
 import { StatefulUseCase } from '../stateful-usecase';
 
@@ -21,12 +23,18 @@ export class EditCategoryUseCase extends StatefulUseCase<State> {
     await this.initCategory();
   };
 
-  initCategory = async () => {
+  private initCategory = async () => {
     const { data } = await api.get(`/categories/${this.state.category.id}`);
+    if (!data) {
+      throw new NotFoundError('Category');
+    }
     this.setState({ category: data, isLoading: false });
   };
 
   setCategory = ({ name, value }: { name: 'name' | 'description'; value: string }) => {
+    if (!['name', 'description'].includes(name)) {
+      throw new ValidationError(`Invalid attribute type: ${name}`);
+    }
     this.setState({
       category: {
         ...this.state.category,

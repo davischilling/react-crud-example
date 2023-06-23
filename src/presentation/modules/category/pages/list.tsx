@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { GridFilterModel } from '@mui/x-data-grid';
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
@@ -19,6 +19,11 @@ export function ListCategoryPage() {
 
   return (
     <Box maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+      <Box p={2}>
+        <Box mb={2}>
+          <Typography variant="h4">List Categories</Typography>
+        </Box>
+      </Box>
       <Box display="flex" justifyContent="flex-end">
         <Button
           variant="contained"

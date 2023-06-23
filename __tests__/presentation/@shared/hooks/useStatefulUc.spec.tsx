@@ -11,8 +11,10 @@ class MockUseCase extends StatefulUseCase<MockState> {
     // no need for implementation
   };
 
-  updateValue = (value: number) => {
-    this.setState({ value });
+  updateValue = (value: number, cb?: () => void) => {
+    this.setState({ value }, () => {
+      cb && cb();
+    });
   };
 }
 
@@ -67,5 +69,26 @@ describe('useStatefulUseCase', () => {
     unmount();
 
     expect(useCase.init).toHaveBeenCalled();
+  });
+
+  test('should call the callback function if provided', () => {
+    const DEFAULT_STATE = { value: 0 };
+    const mockCallback = jest.fn(); // Create a mock callback function
+    const { result } = renderHook(() =>
+      useStatefulUseCase({
+        UseCase: MockUseCase,
+        DEFAULT_STATE,
+        INITIAL_STATE: {},
+      }),
+    );
+
+    const { useCase } = result.current;
+
+    // Call the setState callback with the mock callback function
+    act(() => {
+      useCase.updateValue(10, mockCallback);
+    });
+
+    expect(mockCallback).toHaveBeenCalled();
   });
 });

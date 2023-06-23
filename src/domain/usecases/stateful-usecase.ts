@@ -4,7 +4,6 @@ export type SetState<T> = (newState: Partial<T>, cb?: StateCallback) => void;
 export abstract class StatefulUseCase<State> {
   protected state: State;
   protected setState: SetState<State>;
-  static counter = 0;
 
   constructor(state: State, setStateCb: SetState<State>) {
     this.state = state;
@@ -12,7 +11,6 @@ export abstract class StatefulUseCase<State> {
       this.state = Object.assign({}, this.state, newState);
       setStateCb(newState, cb);
     };
-    StatefulUseCase.counter++;
   }
 
   public getState(): State {

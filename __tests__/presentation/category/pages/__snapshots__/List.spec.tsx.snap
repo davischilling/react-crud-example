@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListCategoryPage renders the "List Categories" page 1`] = `
+<DocumentFragment>
+  <div
+    class="MuiBox-root css-1ozyran"
+  >
+    <div
+      class="MuiBox-root css-19midj6"
+    >
+      <div
+        class="MuiBox-root css-1qm1lh"
+      >
+        <h4
+          class="MuiTypography-root MuiTypography-h4 css-5lbw0b-MuiTypography-root"
+        >
+          List Categories
+        </h4>
+      </div>
+    </div>
+    <div
+      class="MuiBox-root css-1bvc4cc"
+    >
+      <a
+        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium css-zcbmsk-MuiButtonBase-root-MuiButton-root"
+        href="/categories/create"
+        style="margin-bottom: 1rem;"
+        tabindex="0"
+      >
+        New Category
+        <span
+          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+        />
+      </a>
+    </div>
+    <div
+      data-testid="mocked-table"
+    >
+      Mocked Table Content
+      <div>
+        <p
+          data-testid="cell-id-1"
+        >
+          Category 1
+        </p>
+        <p
+          data-testid="cell-id-2"
+        >
+          Category 2
+        </p>
+        <button>
+          filter
+        </button>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -3,11 +3,24 @@ import { BrowserRouter } from 'react-router-dom';
 import {
   DEFAULT_STATE,
   ListCategoriesUseCase,
+  State,
 } from '../../../../src/domain/usecases/category/list';
 import * as useStatefulUseCaseModule from '../../../../src/presentation/@shared/hooks/useStatefulUc';
 
 import { Table, TableProps } from '../../../../src/presentation/modules/category/components/Table';
 import { ListCategoryPage } from '../../../../src/presentation/modules/category/pages/list';
+import { renderWithProviders } from '../../../utils/render-helper';
+
+jest.mock('recoil', () => ({
+  atom: jest.fn().mockReturnValue({
+    key: 'ListCategoriesUseCase',
+    default: {
+      isLoading: true,
+      categories: [],
+      filteredCategories: [],
+    },
+  }),
+}));
 
 jest.mock('../../../../src/presentation/modules/category/components/Table', () => ({
   Table: jest.fn(({ data, isFetching, handleFilterChange }: TableProps) => (
@@ -46,7 +59,7 @@ jest.mock('../../../../src/presentation/modules/category/components/Table', () =
 
 describe('ListCategoryPage', () => {
   let fragment: DocumentFragment;
-  let useStatefulUseCase: jest.SpyInstance;
+  let useStatefulUseCaseSpy: jest.SpyInstance;
   let filterCategoriesSpy: jest.SpyInstance;
   const mockedData = [
     { id: 1, name: 'Category 1' },
@@ -56,8 +69,8 @@ describe('ListCategoryPage', () => {
   beforeEach(async () => {
     jest.clearAllMocks();
     filterCategoriesSpy = jest.fn();
-    useStatefulUseCase = jest
-      .spyOn(useStatefulUseCaseModule as any, 'useStatefulUseCase')
+    useStatefulUseCaseSpy = jest
+      .spyOn(useStatefulUseCaseModule as any, 'useStatefulRecoil')
       .mockReturnValue({
         state: {
           isLoading: false,
@@ -67,21 +80,28 @@ describe('ListCategoryPage', () => {
           filterCategories: filterCategoriesSpy,
         },
       });
-    fragment = await waitFor(() => {
-      const { asFragment } = render(<ListCategoryPage />, { wrapper: BrowserRouter });
-      return asFragment();
+    const { asFragment } = renderWithProviders<State>(<ListCategoryPage />, ['/categories'], {
+      wrapper: BrowserRouter,
     });
+    fragment = asFragment();
   });
 
   test('renders the "List Categories" page', () => {
     expect(fragment).toMatchSnapshot();
   });
 
-  test('calls useStatefulUseCase with correct arguments', () => {
-    expect(useStatefulUseCase).toHaveBeenCalledTimes(1);
-    expect(useStatefulUseCase).toHaveBeenCalledWith({
+  test('calls useStatefulRecoil with correct params', () => {
+    expect(useStatefulUseCaseSpy).toHaveBeenCalledTimes(1);
+    expect(useStatefulUseCaseSpy).toHaveBeenCalledWith({
       UseCase: ListCategoriesUseCase,
-      DEFAULT_STATE,
+      recoilState: expect.objectContaining({
+        key: 'ListCategoriesUseCase',
+        default: {
+          isLoading: true,
+          categories: [],
+          filteredCategories: [],
+        },
+      }),
     });
   });
 
@@ -106,14 +126,6 @@ describe('ListCategoryPage', () => {
     );
   });
 
-  test('calls useStatefulUseCase with correct arguments', () => {
-    expect(useStatefulUseCase).toHaveBeenCalledTimes(1);
-    expect(useStatefulUseCase).toHaveBeenCalledWith({
-      UseCase: ListCategoriesUseCase,
-      DEFAULT_STATE,
-    });
-  });
-
   test('renders the "New Category" button', () => {
     const newCategoryButton = screen.getByText('New Category');
     expect(newCategoryButton).toBeInTheDocument();
@@ -136,7 +148,7 @@ describe('ListCategoryPage', () => {
   });
 
   test('renders the component with loading state', async () => {
-    useStatefulUseCase.mockReturnValue({
+    useStatefulUseCaseSpy.mockReturnValue({
       state: {
         isLoading: true,
         filteredCategories: [],
@@ -152,7 +164,7 @@ describe('ListCategoryPage', () => {
 
   test('renders the component with non-empty filtered categories', async () => {
     jest.clearAllMocks();
-    useStatefulUseCase.mockReturnValue({
+    useStatefulUseCaseSpy.mockReturnValue({
       state: {
         isLoading: false,
         filteredCategories: mockedData,
@@ -172,7 +184,7 @@ describe('ListCategoryPage', () => {
   });
 
   test('renders the component with empty filtered categories', async () => {
-    useStatefulUseCase.mockReturnValueOnce({
+    useStatefulUseCaseSpy.mockReturnValueOnce({
       state: {
         isLoading: false,
         filteredCategories: [],

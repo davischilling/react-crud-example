@@ -1,13 +1,21 @@
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { BrowserRouter, useNavigate } from 'react-router-dom';
+
 import * as useStatefulUseCaseModule from '../../../../src/presentation/@shared/hooks/useStatefulUc';
-import Form from '../../../../src/presentation/modules/category/components/Form';
 import { CreateCategoryPage } from '../../../../src/presentation/modules/category/pages/create';
-import { RecoilRoot } from 'recoil';
+import { renderWithProviders } from '../../../utils/render-helper';
+import { fireEvent, screen } from '@testing-library/dom';
+import { act } from '@testing-library/react';
+import Form from '../../../../src/presentation/modules/category/components/Form';
+import { atom } from 'recoil';
+import { State, CreateCategoryUseCase } from '../../../../src/domain/usecases/category/create';
 
 jest.mock('recoil', () => ({
-  __esModule: true,
-  atom: jest.fn().mockReturnValue({ key: 'MockedAtom' }),
+  atom: jest.fn().mockReturnValue({
+    key: 'CreateCategoryUseCase',
+    default: {
+      category: { name: 'Mocked Category' },
+    },
+  }),
 }));
 
 jest.mock('../../../../src/presentation/modules/category/components/Form', () => ({
@@ -29,7 +37,7 @@ jest.mock('react-router-dom', () => ({
 
 describe('CreateCategoryPage', () => {
   let fragment: DocumentFragment;
-  let useStatefulUseCase: jest.SpyInstance;
+  let useStatefulUseCaseSpy: jest.SpyInstance;
 
   let navigateSpy: jest.SpyInstance;
 
@@ -47,7 +55,7 @@ describe('CreateCategoryPage', () => {
     setCategorySpy = jest.fn();
     toggleIsActiveSpy = jest.fn();
 
-    useStatefulUseCase = jest
+    useStatefulUseCaseSpy = jest
       .spyOn(useStatefulUseCaseModule as any, 'useStatefulRecoil')
       .mockReturnValue({
         state: mockState,
@@ -57,15 +65,26 @@ describe('CreateCategoryPage', () => {
           toggleIsActive: toggleIsActiveSpy,
         },
       });
-    const { asFragment } = render(
-      <RecoilRoot>
-        <BrowserRouter>
-          <CreateCategoryPage />
-        </BrowserRouter>
-      </RecoilRoot>,
+
+    const { asFragment } = renderWithProviders<State>(
+      <CreateCategoryPage />,
+      ['/categories/create'],
+      {
+        wrapper: BrowserRouter,
+      },
     );
     fragment = asFragment();
-    console.log(fragment);
+  });
+
+  test('useStatefulRecoil to have been called correctly', () => {
+    expect(useStatefulUseCaseSpy).toHaveBeenCalledTimes(1);
+    expect(useStatefulUseCaseSpy).toHaveBeenCalledWith({
+      UseCase: CreateCategoryUseCase,
+      recoilState: expect.objectContaining({
+        key: 'CreateCategoryUseCase',
+        default: mockState,
+      }),
+    });
   });
 
   test('renders the "Create Category" page', () => {

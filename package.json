@@ -72,7 +72,10 @@
       "!<rootDir>/**/index.ts"
     ],
     "testPathIgnorePatterns": [
-      "<rootDir>/__tests__/utils/make-sut.ts"
+      "<rootDir>/__tests__/utils/"
+    ],
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/__tests__/utils/"
     ],
     "clearMocks": true
   }

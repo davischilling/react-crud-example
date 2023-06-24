@@ -1,9 +1,18 @@
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { BrowserRouter, useNavigate, useParams } from 'react-router-dom';
-import { DEFAULT_STATE, EditCategoryUseCase } from '../../../../src/domain/usecases/category/edit';
 import * as useStatefulUseCaseModule from '../../../../src/presentation/@shared/hooks/useStatefulUc';
 import Form from '../../../../src/presentation/modules/category/components/Form';
 import { EditCategoryPage } from '../../../../src/presentation/modules/category/pages/edit';
+import { atom } from 'recoil';
+import { State, EditCategoryUseCase } from '../../../../src/domain/usecases/category/edit';
+import { renderWithProviders } from '../../../utils/render-helper';
+
+jest.mock('recoil', () => ({
+  atom: jest.fn().mockReturnValue({
+    key: 'EditCategoryUseCase',
+    default: { category: { name: 'Mocked Category' }, isLoading: false },
+  }),
+}));
 
 jest.mock('../../../../src/presentation/modules/category/components/Form', () => ({
   __esModule: true,
@@ -25,7 +34,7 @@ jest.mock('react-router-dom', () => ({
 
 describe('EditCategoryPage', () => {
   let fragment: DocumentFragment;
-  let useStatefulUseCase: jest.SpyInstance;
+  let useStatefulUseCaseSpy: jest.SpyInstance;
 
   let navigateSpy: jest.SpyInstance;
   let updateCategorySpy: jest.SpyInstance;
@@ -41,8 +50,8 @@ describe('EditCategoryPage', () => {
     updateCategorySpy = jest.fn();
     setCategorySpy = jest.fn();
     toggleIsActiveSpy = jest.fn();
-    useStatefulUseCase = jest
-      .spyOn(useStatefulUseCaseModule as any, 'useStatefulUseCase')
+    useStatefulUseCaseSpy = jest
+      .spyOn(useStatefulUseCaseModule as any, 'useStatefulRecoil')
       .mockReturnValue({
         state: mockState,
         useCase: {
@@ -51,10 +60,14 @@ describe('EditCategoryPage', () => {
           toggleIsActive: toggleIsActiveSpy,
         },
       });
-    fragment = await waitFor(() => {
-      const { asFragment } = render(<EditCategoryPage />, { wrapper: BrowserRouter });
-      return asFragment();
-    });
+    const { asFragment } = renderWithProviders<State>(
+      <EditCategoryPage />,
+      ['/categories/edit/1'],
+      {
+        wrapper: BrowserRouter,
+      },
+    );
+    fragment = asFragment();
   });
 
   test('renders the "Edit Category" page', () => {
@@ -64,18 +77,21 @@ describe('EditCategoryPage', () => {
   });
 
   test('calls useStatefulUseCase with correct arguments', () => {
-    expect(useStatefulUseCase).toHaveBeenCalledTimes(1);
-    expect(useStatefulUseCase).toHaveBeenCalledWith({
+    expect(useStatefulUseCaseSpy).toHaveBeenCalledTimes(1);
+    expect(useStatefulUseCaseSpy).toHaveBeenCalledWith({
       UseCase: EditCategoryUseCase,
-      DEFAULT_STATE,
-      INITIAL_STATE: {
+      recoilState: expect.objectContaining({
+        key: 'EditCategoryUseCase',
+        default: mockState,
+      }),
+      INITIAL_STATE: expect.objectContaining({
         category: {
           id: '1',
           name: '',
           description: '',
           is_active: true,
         },
-      },
+      }),
     });
   });
 

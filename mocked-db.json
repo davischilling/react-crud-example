@@ -69,7 +69,7 @@
       "is_active": false,
       "created_at": "Wed Jun 21 2023 22:30:25 GMT-0300 (Brasilia Standard Time)",
       "updated_at": "Fri Jun 23 2023 12:35:10 GMT-0300 (Brasilia Standard Time)",
-      "deleted_at": null,
+      "deleted_at": "Fri Jun 23 2023 22:48:38 GMT-0300 (Brasilia Standard Time)",
       "id": 8
     },
     {
@@ -89,6 +89,15 @@
       "updated_at": "Fri Jun 23 2023 12:35:28 GMT-0300 (Brasilia Standard Time)",
       "deleted_at": null,
       "id": 10
+    },
+    {
+      "name": "nova categoria",
+      "description": "desc da categoria",
+      "is_active": true,
+      "created_at": "Fri Jun 23 2023 22:48:42 GMT-0300 (Brasilia Standard Time)",
+      "updated_at": "Fri Jun 23 2023 22:48:42 GMT-0300 (Brasilia Standard Time)",
+      "deleted_at": null,
+      "id": 11
     }
   ]
 }

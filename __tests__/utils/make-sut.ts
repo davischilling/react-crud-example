@@ -6,9 +6,9 @@ export async function makeStatefulUseCase<State, UseCaseClass extends StatefulUs
   init: boolean = true,
 ) {
   let state: State = Object.assign({}, defaultState);
-  const useCase: UseCaseClass = new UseCase(state, (newState, cb) => {
+  const useCase: UseCaseClass = new UseCase(state, async (newState, cb) => {
     state = { ...state, ...newState };
-    cb && cb();
+    cb && (await cb());
   });
   init && (await useCase.init());
   return useCase;

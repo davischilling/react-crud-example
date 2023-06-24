@@ -12,7 +12,7 @@ class MockUseCase extends StatefulUseCase<MockState> {
   };
 
   updateValue = (value: number, cb?: () => void) => {
-    this.setState({ value }, () => {
+    this.setState({ value }, async () => {
       cb && cb();
     });
   };

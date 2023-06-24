@@ -44,21 +44,25 @@ describe('EditCategoryUseCase', () => {
 
   describe('initCategory', () => {
     it('should load category from the API and update the state', async () => {
-      let useCase = await makeSut(false, { category: { id: '1' } });
+      let useCase = await makeSut(false);
       const initCategorySpy = jest.spyOn(useCase as any, 'initCategory');
 
-      await useCase.init();
+      await useCase.init({ category: { id: '1' } });
 
       expect(initCategorySpy).toHaveBeenCalledTimes(1);
       expect(getMock).toHaveBeenCalledTimes(1);
       expect(getMock).toHaveBeenCalledWith('/categories/1');
     });
 
-    it('should throw NotFoundError if api.get data returns null', async () => {
+    it('should not throw and set isLoading to false if api.get throws', async () => {
       let useCase = await makeSut(false);
-      getMock.mockResolvedValueOnce({ data: null });
+      getMock.mockRejectedValueOnce(new NotFoundError('not found'));
+      expect(useCase.getState().isLoading).toBe(true);
 
-      await expect(useCase.init()).rejects.toThrow(new NotFoundError('Category'));
+      await useCase.init({ category: { id: '2' } });
+
+      expect(useCase.getState().isLoading).toBe(false);
+      expect(useCase.getState().category).toEqual({ ...DEFAULT_STATE.category, id: '2' });
     });
   });
 

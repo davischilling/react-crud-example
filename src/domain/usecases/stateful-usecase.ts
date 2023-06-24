@@ -1,4 +1,4 @@
-export type StateCallback = () => void;
+export type StateCallback = () => Promise<void>;
 export type SetState<T> = (newState: Partial<T>, cb?: StateCallback) => void;
 
 export abstract class StatefulUseCase<State> {
@@ -17,5 +17,5 @@ export abstract class StatefulUseCase<State> {
     return this.state;
   }
 
-  abstract init: () => Promise<void>;
+  abstract init: (INITIAL_STATE?: any) => Promise<void>;
 }

@@ -1,20 +1,27 @@
 import { Box, Paper, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
+import { atom } from 'recoil';
 import {
   CreateCategoryUseCase,
   DEFAULT_STATE,
   State,
 } from '../../../../domain/usecases/category/create';
 import { useFormState } from '../../../@shared/hooks/useFormState';
-import { useStatefulUseCase } from '../../../@shared/hooks/useStatefulUc';
+import { useStatefulRecoil } from '../../../@shared/hooks/useStatefulUc';
 import Form from '../components/Form';
 
+const CreateCategoryAtom = atom({
+  key: 'CreateCategoryUseCase',
+  default: DEFAULT_STATE,
+});
+
 export function CreateCategoryPage() {
-  const { state, useCase } = useStatefulUseCase<State, CreateCategoryUseCase>({
+  const { state, useCase } = useStatefulRecoil<State, CreateCategoryUseCase>({
     UseCase: CreateCategoryUseCase,
-    DEFAULT_STATE,
+    recoilState: CreateCategoryAtom,
   });
+
   const navigate = useNavigate();
   const { handleChange, handleSubmit, handleToggle } = useFormState({
     setEntity: useCase.setCategory,

@@ -19,16 +19,25 @@ export const DEFAULT_STATE: State = {
 };
 
 export class EditCategoryUseCase extends StatefulUseCase<State> {
-  public init = async () => {
-    await this.initCategory();
+  public init = async (INITIAL_STATE?: Partial<State>) => {
+    this.setState(
+      {
+        category: {
+          ...DEFAULT_STATE.category,
+          id: INITIAL_STATE?.category?.id,
+        },
+      },
+      async () => await this.initCategory(),
+    );
   };
 
   private initCategory = async () => {
-    const { data } = await api.get(`/categories/${this.state.category.id}`);
-    if (!data) {
-      throw new NotFoundError('Category');
+    try {
+      const { data } = await api.get(`/categories/${this.state.category.id}`);
+      this.setState({ category: data, isLoading: false });
+    } catch (error) {
+      this.setState({ isLoading: false });
     }
-    this.setState({ category: data, isLoading: false });
   };
 
   setCategory = ({ name, value }: { name: 'name' | 'description'; value: string }) => {

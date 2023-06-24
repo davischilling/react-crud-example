@@ -114,8 +114,9 @@ export function Table({
   ];
 
   return (
-    <Box sx={{ display: 'flex', height: 600 }}>
+    <Box sx={{ display: 'flex' }}>
       <DataGrid
+        style={{ flex: 1, minHeight: '60vh' }}
         rows={rows}
         columns={columns}
         slotProps={componentProps}

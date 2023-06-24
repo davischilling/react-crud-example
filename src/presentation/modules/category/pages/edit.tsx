@@ -1,21 +1,26 @@
 import { Box, Paper, Typography } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 
+import { atom } from 'recoil';
 import {
   DEFAULT_STATE,
   EditCategoryUseCase,
   State,
 } from '../../../../domain/usecases/category/edit';
 import { useFormState } from '../../../@shared/hooks/useFormState';
-import { useStatefulUseCase } from '../../../@shared/hooks/useStatefulUc';
+import { useStatefulRecoil } from '../../../@shared/hooks/useStatefulUc';
 import Form from '../components/Form';
+
+const EditCategoryAtom = atom<State>({
+  key: 'EditCategoryUseCase',
+  default: DEFAULT_STATE,
+});
 
 export function EditCategoryPage() {
   const id = useParams().id;
-
-  const { state, useCase } = useStatefulUseCase<State, EditCategoryUseCase>({
+  const { state, useCase } = useStatefulRecoil<State, EditCategoryUseCase>({
     UseCase: EditCategoryUseCase,
-    DEFAULT_STATE,
+    recoilState: EditCategoryAtom,
     INITIAL_STATE: {
       category: {
         id,

@@ -62,7 +62,7 @@ export class ListCategoriesUseCase extends StatefulUseCase<State> {
 
   private loadCategories = (c: Category[]) => {
     const categories = c.filter((c: Category) => !c.deleted_at);
-    this.setState({ categories, filteredCategories: categories }, () => {
+    this.setState({ categories, filteredCategories: categories }, async () => {
       this.setState({ isLoading: false });
     });
   };

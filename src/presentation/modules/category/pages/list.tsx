@@ -1,20 +1,26 @@
 import { Box, Button, Typography } from '@mui/material';
 import { GridFilterModel } from '@mui/x-data-grid';
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
+import { atom } from 'recoil';
 import {
   DEFAULT_STATE,
   ListCategoriesUseCase,
   State,
 } from '../../../../domain/usecases/category/list';
-import { useStatefulUseCase } from '../../../@shared/hooks/useStatefulUc';
+import { useStatefulRecoil } from '../../../@shared/hooks/useStatefulUc';
 import { Table } from '../components/Table';
 
+const ListCategoryAtom = atom({
+  key: 'ListCategoriesUseCase',
+  default: DEFAULT_STATE,
+});
+
 export function ListCategoryPage() {
-  const { state, useCase } = useStatefulUseCase<State, ListCategoriesUseCase>({
+  const { state, useCase } = useStatefulRecoil<State, ListCategoriesUseCase>({
     UseCase: ListCategoriesUseCase,
-    DEFAULT_STATE,
+    recoilState: ListCategoryAtom,
   });
 
   return (

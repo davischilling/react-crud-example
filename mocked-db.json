@@ -170,6 +170,15 @@
       "updated_at": "Fri Jun 23 2023 20:31:34 GMT-0300 (Brasilia Standard Time)",
       "deleted_at": "Fri Jun 23 2023 20:33:36 GMT-0300 (Brasilia Standard Time)",
       "id": 19
+    },
+    {
+      "name": "nova categoria aaaaaaa",
+      "description": "desc da categoria",
+      "is_active": false,
+      "created_at": "Fri Jun 23 2023 22:43:07 GMT-0300 (Brasilia Standard Time)",
+      "updated_at": "Fri Jun 23 2023 22:43:15 GMT-0300 (Brasilia Standard Time)",
+      "deleted_at": "Fri Jun 23 2023 22:43:19 GMT-0300 (Brasilia Standard Time)",
+      "id": 20
     }
   ]
 }

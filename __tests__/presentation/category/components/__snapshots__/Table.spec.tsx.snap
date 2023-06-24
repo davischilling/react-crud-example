@@ -3,7 +3,7 @@
 exports[`Table should correcly render Table component 1`] = `
 <DocumentFragment>
   <div
-    class="MuiBox-root css-1fat0eg"
+    class="MuiBox-root css-k008qs"
   >
     <div
       aria-colcount="5"
@@ -11,6 +11,7 @@ exports[`Table should correcly render Table component 1`] = `
       aria-rowcount="3"
       class="MuiDataGrid-root MuiDataGrid-root--densityStandard MuiDataGrid-withBorderColor css-1lymaxv-MuiDataGrid-root"
       role="grid"
+      style="flex: 1; min-height: 60vh;"
     >
       <div
         class="MuiDataGrid-toolbarContainer css-128fb87-MuiDataGrid-toolbarContainer"

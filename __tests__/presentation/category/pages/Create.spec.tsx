@@ -1,6 +1,6 @@
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { BrowserRouter, useNavigate } from 'react-router-dom';
-import * as useStatefulRecoilModule from '../../../../src/presentation/@shared/hooks/useStatefulUc';
+import * as useStatefulUseCaseModule from '../../../../src/presentation/@shared/hooks/useStatefulUc';
 import Form from '../../../../src/presentation/modules/category/components/Form';
 import { CreateCategoryPage } from '../../../../src/presentation/modules/category/pages/create';
 import { RecoilRoot } from 'recoil';
@@ -28,7 +28,8 @@ jest.mock('react-router-dom', () => ({
 }));
 
 describe('CreateCategoryPage', () => {
-  let useStatefulRecoil: jest.SpyInstance;
+  let fragment: DocumentFragment;
+  let useStatefulUseCase: jest.SpyInstance;
 
   let navigateSpy: jest.SpyInstance;
 
@@ -38,7 +39,7 @@ describe('CreateCategoryPage', () => {
 
   const mockState = { category: { name: 'Mocked Category' } };
 
-  beforeEach(() => {
+  beforeEach(async () => {
     navigateSpy = jest.fn();
     (useNavigate as jest.Mock).mockReturnValue(navigateSpy);
 
@@ -46,8 +47,8 @@ describe('CreateCategoryPage', () => {
     setCategorySpy = jest.fn();
     toggleIsActiveSpy = jest.fn();
 
-    useStatefulRecoil = jest
-      .spyOn(useStatefulRecoilModule as any, 'useStatefulRecoil')
+    useStatefulUseCase = jest
+      .spyOn(useStatefulUseCaseModule as any, 'useStatefulRecoil')
       .mockReturnValue({
         state: mockState,
         useCase: {
@@ -56,45 +57,34 @@ describe('CreateCategoryPage', () => {
           toggleIsActive: toggleIsActiveSpy,
         },
       });
+    const { asFragment } = render(
+      <RecoilRoot>
+        <BrowserRouter>
+          <CreateCategoryPage />
+        </BrowserRouter>
+      </RecoilRoot>,
+    );
+    fragment = asFragment();
+    console.log(fragment);
   });
 
   test('renders the "Create Category" page', () => {
-    render(
-      <RecoilRoot>
-        <BrowserRouter>
-          <CreateCategoryPage />
-        </BrowserRouter>
-      </RecoilRoot>,
-    );
-
     const titleElement = screen.getByText('Create Category');
     expect(titleElement).toBeInTheDocument();
+    expect(fragment).toMatchSnapshot();
   });
 
   test('should correctly call useNavigate', () => {
-    render(
-      <RecoilRoot>
-        <BrowserRouter>
-          <CreateCategoryPage />
-        </BrowserRouter>
-      </RecoilRoot>,
-    );
-
     expect(useNavigate).toHaveBeenCalledTimes(1);
     expect(useNavigate).toHaveBeenCalledWith();
   });
 
-  test('should call navigate and onSubmit when handleSubmit returned by useFormState hook is called', () => {
-    render(
-      <RecoilRoot>
-        <BrowserRouter>
-          <CreateCategoryPage />
-        </BrowserRouter>
-      </RecoilRoot>,
-    );
-
+  test('should call navigate and onSubmit when handleSubmit returned by useFormState hook is called', async () => {
     const formSubmitButton = screen.getByText('submit');
-    fireEvent.click(formSubmitButton);
+
+    await act(async () => {
+      fireEvent.click(formSubmitButton);
+    });
 
     expect(createCategorySpy).toHaveBeenCalledTimes(1);
     expect(createCategorySpy).toHaveBeenCalledWith();
@@ -103,14 +93,6 @@ describe('CreateCategoryPage', () => {
   });
 
   test('passes the correct props to the Form component', () => {
-    render(
-      <RecoilRoot>
-        <BrowserRouter>
-          <CreateCategoryPage />
-        </BrowserRouter>
-      </RecoilRoot>,
-    );
-
     expect(Form).toHaveBeenCalledWith(
       expect.objectContaining({
         category: mockState.category,
